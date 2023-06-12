@@ -1,6 +1,6 @@
 # PAA-Group215
 
-![Mazdo Game logo](/Mazdologo.PNG)
+![Mazdo Game logo](/Mazdo logo.png)
 
 
 Project Perancangan dan Analisis Algoritma 2023
