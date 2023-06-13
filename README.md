@@ -44,14 +44,17 @@ Deskripsi Fitur
 
 # Fitur untuk Mengacak Peta/Map
 Deskripsi Fitur
+
 [![Watch the video](https://img.youtube.com/vi/UVkMTSItmIs/0.jpg)](https://www.youtube.com/watch?v=UVkMTSItmIs)
 
 # Fitur untuk Mengacak Droid
 Deskripsi Fitur
+
 [![Watch the video](https://img.youtube.com/vi/cmWsmcuKLok/0.jpg)](https://www.youtube.com/watch?v=cmWsmcuKLok)
 
 # Fitur untuk Menambahkan Droid Merah
 Deskripsi Fitur
+
 [![Watch the video](https://img.youtube.com/vi/2Wy2BZ7c_tk/0.jpg)](https://www.youtube.com/watch?v=2Wy2BZ7c_tk)
 
 # Fitur untuk Mengurangi Droid Merah
