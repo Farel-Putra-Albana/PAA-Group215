@@ -196,32 +196,22 @@ def button():
     slider_pos = lebar_layar - 170 + int((droid_hijau_visibility - 2) / 3 * 240)
     pygame.draw.circle(screen, HITAM, (slider_pos, 140 + 5 * 50 + 20), 10)
 
-def acak_droid():
-    global baris_droid_hijau, kolom_droid_hijau, baris_droid_merah, kolom_droid_merah
+# Fungsi untuk mengubah jarak pandang droid hijau
+def ubah_pandangan_DroidHijau(pos):
+    global droid_hijau_visibility
 
-    while True:
-        baris_droid_hijau = random.randint(0, tinggi_sel - 1)
-        kolom_droid_hijau = random.randint(0, lebar_sel - 1)
-        if labirin[baris_droid_hijau][kolom_droid_hijau] == 0:
-            break
-
-    while True:
-        baris_droid_merah = random.randint(0, tinggi_sel - 1)
-        kolom_droid_merah = random.randint(0, lebar_sel - 1)
-        if labirin[baris_droid_merah][kolom_droid_merah] == 0:
-            break
-
-def acak_droid_tambahan():
-    global droidMerah_tambahan, baris_droid_merah, kolom_droid_merah
-
-    while True:
-        baris_droid_merah = random.randint(0, tinggi_sel - 1)
-        kolom_droid_merah = random.randint(0, lebar_sel - 1)
-        if labirin[baris_droid_merah][kolom_droid_merah] == 0:
-            break
+    lebar_slider = 160
+    slider_pos = pos[0] - (lebar_layar - 180)
+    percentage = slider_pos / lebar_slider
+    droid_hijau_visibility = int(percentage * 4) + 2
     
 def is_putih_path(baris, kolom):
     return labirin[baris][kolom] == 0
+
+def kurangi_droid():
+    global droidMerah_tambahan
+    if len(droidMerah_tambahan) > 0:
+        droidMerah_tambahan.pop()
 
 # fungsi untuk button acak map
 def acak_map():
@@ -273,20 +263,33 @@ def tambah_droid():
             break
     # Menambahkan droid merah baru ke dalam list
     droidMerah_tambahan.append((baris_droid_merah, kolom_droid_merah))
+        
+def acak_droid():
+    global baris_droid_hijau, kolom_droid_hijau, baris_droid_merah, kolom_droid_merah
 
-def kurangi_droid():
-    global droidMerah_tambahan
-    if len(droidMerah_tambahan) > 0:
-        droidMerah_tambahan.pop()
+    while True:
+        baris_droid_hijau = random.randint(0, tinggi_sel - 1)
+        kolom_droid_hijau = random.randint(0, lebar_sel - 1)
+        if labirin[baris_droid_hijau][kolom_droid_hijau] == 0:
+            break
 
-# Fungsi untuk mengubah jarak pandang droid hijau
-def ubah_pandangan_DroidHijau(pos):
-    global droid_hijau_visibility
+    while True:
+        baris_droid_merah = random.randint(0, tinggi_sel - 1)
+        kolom_droid_merah = random.randint(0, lebar_sel - 1)
+        if labirin[baris_droid_merah][kolom_droid_merah] == 0:
+            break
 
-    lebar_slider = 160
-    slider_pos = pos[0] - (lebar_layar - 180)
-    percentage = slider_pos / lebar_slider
-    droid_hijau_visibility = int(percentage * 4) + 2
+droidMerah_tambahan = []
+def acak_droid_tambahan():
+    global baris_droid_merah, kolom_droid_merah
+
+    while True:
+        baris = random.randint(0, tinggi_sel - 1)
+        kolom = random.randint(0, lebar_sel - 1)
+        if labirin[baris][kolom] == 0 and (baris, kolom) not in droidMerah_tambahan:
+            break
+
+    droidMerah_tambahan.append((baris, kolom))
 
 def move_droid_merah():
     global baris_droid_merah, kolom_droid_merah, posisi_terakhir_droid_hijau, is_game_running
@@ -529,11 +532,14 @@ while running:
                     # button untuk acak droid
                     elif button_index == 1:
                         acak_droid()
-                        acak_droid_tambahan()
-                        droidMerah_tambahan_count = 0
-                        for droid_merah in droidMerah_tambahan:
-                            gambar_droid(MERAH, droid_merah[0], droid_merah[1])
-                        pygame.display.flip()  # Perbarui tampilan setelah mengacak droid dan menggambar droid merah
+                        for i in range(len(droidMerah_tambahan)):
+                            while True:
+                                baris = random.randint(0, tinggi_sel - 1)
+                                kolom = random.randint(0, lebar_sel - 1)
+                                if labirin[baris][kolom] == 0 and (baris, kolom) not in droidMerah_tambahan:
+                                    break
+                            droidMerah_tambahan[i] = (baris, kolom)
+                        pygame.display.flip()  # Perbarui tampilan setelah mengacak posisi droid merah
                     # button untuk tambah droid     
                     elif button_index == 2:
                         if droidMerah_tambahan_count < MAX_droidMerah_tambahan:
@@ -559,7 +565,7 @@ while running:
                     # button untuk slider pandangan droid hijau
                     elif button_index == 5:
                         ubah_pandangan_DroidHijau(event.pos)
-                    # button PANDANGAN DROID MERAH baru
+                    # button PANDANGAN DROID MERAH 
                     elif button_index == 6:
                         pandangan_droidMerah = not pandangan_droidMerah
                         if pandangan_droidMerah:
