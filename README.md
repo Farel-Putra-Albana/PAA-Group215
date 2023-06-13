@@ -9,7 +9,7 @@ Mazdo Game ini merupakan tugas akhir dari matakuliah Perancangan dan Analisis Al
 “Mazdo Game” adalah sebuah game yang menggabungkan elemen strategi dari algoritma pencari dan penghindar. Terdapat dua droid yang akan bermain di dalam permainan ini yaitu, Droid Merah dan Droid Hijau. Droid Merah merupakan droid yang bertugas untuk mengejar Droid Hijau, sedangkan Droid Hijau merupakan droid yang bertugas untuk menghindar dari Droid Merah. 
 
 Tujuan utama dari permainan ini adalah Droid Merah menemukan Droid Hijau dan Droid Hijau menghindar dari kejaran Droid Merah. Adapun kriteria dari masing masing droid sebagai berikut :
--	Droid Merah
+
 1. Droid Merah : 
 - Droid Merah mencari Droid Hijau
 - Droid Merah mengetahui kondisi peta (jarak pandang jauh)
@@ -36,10 +36,36 @@ Mazdo Game memiliki beberapa fitur ketika permainan ini dimainkan. Adapun fitur 
 8. Fitur untuk Melihat Pandangan Droid Merah
 9. Fitur untuk Melihat Pandangan Droid Hijau
 
+# Fitur untuk Memulai Permainan 
+Deskripsi Fitur
+
+# Fitur untuk Memberhentikan Gerakan Droid
+Deskripsi Fitur
+
+# Fitur untuk Mengacak Peta/Map
+Deskripsi Fitur
+[![Watch the video](https://img.youtube.com/vi/UVkMTSItmIs/0.jpg)](https://www.youtube.com/watch?v=UVkMTSItmIs)
+
 # Fitur untuk Mengacak Droid
+Deskripsi Fitur
 [![Watch the video](https://img.youtube.com/vi/cmWsmcuKLok/0.jpg)](https://www.youtube.com/watch?v=cmWsmcuKLok)
 
-# Fitur untuk Mengacak Map
+# Fitur untuk Menambahkan Droid Merah
+Deskripsi Fitur
+[![Watch the video](https://img.youtube.com/vi/2Wy2BZ7c_tk/0.jpg)](https://www.youtube.com/watch?v=2Wy2BZ7c_tk)
+
+# Fitur untuk Mengurangi Droid Merah
+Deskripsi Fitur
+
+# Fitur untuk Mengatur Jarak Pandang Droid Hijau Melalui Slider
+Deskripsi Fitur
+
+# Fitur untuk Melihat Pandangan Droid Merah
+Deskripsi Fitur
+
+
+
+
 
 
 
