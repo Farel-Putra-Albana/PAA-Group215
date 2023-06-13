@@ -12,13 +12,13 @@ lebar_layar = 1200
 tinggi_layar = 680
 
 # Warna
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GRAY = (128, 128, 128)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
-BLUE = (254, 250, 224)
-BROWN = (212, 163, 115)
+HITAM = (0, 0, 0)
+PUTIH = (255, 255, 255)
+ABU_ABU = (128, 128, 128)
+HIJAU = (0, 255, 0)
+MERAH = (255, 0, 0)
+CREAM = (254, 250, 224)
+COKLAT = (212, 163, 115)
 
 # Ukuran sel dalam labirin
 ukuran_sel = 15
@@ -99,25 +99,25 @@ def gambar_labirin():
             if pandangan_droidMerah:
                 # Jika Pandangan Droid Merah aktif, gambar sel labirin secara normal (tanpa memperhatikan droid hijau)
                 if labirin[baris][kolom] == 1 and not (baris == baris_droid_hijau and kolom == kolom_droid_hijau):
-                    pygame.draw.rect(screen, BLACK, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
+                    pygame.draw.rect(screen, HITAM, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
                 else:
-                    pygame.draw.rect(screen, WHITE, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
+                    pygame.draw.rect(screen, PUTIH, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
             elif pandangan_droidHijau:
                 # Jika Pandangan Droid Hijau aktif, gambar sel labirin hanya di sekitar droid hijau
                 if abs(baris - baris_droid_hijau) <= droid_hijau_visibility and abs(kolom - kolom_droid_hijau) <= droid_hijau_visibility:
                     if labirin[baris][kolom] == 1 and not (baris == baris_droid_hijau and kolom == kolom_droid_hijau):
-                        pygame.draw.rect(screen, BLACK, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
+                        pygame.draw.rect(screen, HITAM, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
                     else:
-                        pygame.draw.rect(screen, WHITE, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
-                    # Draw the green droid
+                        pygame.draw.rect(screen, PUTIH, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
+                    # Draw the hijau droid
                     if baris == baris_droid_hijau and kolom == kolom_droid_hijau:
-                        gambar_droid(GREEN, baris, kolom)
+                        gambar_droid(HIJAU, baris, kolom)
             else:
                 # Jika Pandangan Droid tidak aktif, gambar sel labirin secara normal
                 if labirin[baris][kolom] == 1:
-                    pygame.draw.rect(screen, BLACK, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
+                    pygame.draw.rect(screen, HITAM, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
                 else:
-                    pygame.draw.rect(screen, WHITE, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
+                    pygame.draw.rect(screen, PUTIH, (kolom * ukuran_sel, baris * ukuran_sel, ukuran_sel, ukuran_sel))
 
 def gambar_droid(color, baris, kolom):
     radius = ukuran_sel // 2
@@ -126,20 +126,20 @@ def gambar_droid(color, baris, kolom):
     pygame.draw.circle(screen, color, (x, y), radius)
 
 def button():
-    pygame.draw.rect(screen, BROWN, (lebar_layar - 300, 0, 300, tinggi_layar))
+    pygame.draw.rect(screen, COKLAT, (lebar_layar - 300, 0, 300, tinggi_layar))
 
     font = pygame.font.Font(None, 24)
     labels = ["MULAI", "ACAK DROID", "TAMBAH DROID", "ACAK MAP", "PANDANGAN DROID HIJAU", "", "PANDANGAN DROID MERAH", "KURANGI DROID", "BERHENTI"]
 
     # Menambahkan tulisan "Menu Permainan"
     judul_font = pygame.font.Font(None, 40)
-    judul_text = judul_font.render("Menu Permainan", True, BLACK)
+    judul_text = judul_font.render("Menu Permainan", True, HITAM)
     judul_text_rect = judul_text.get_rect(center=(lebar_layar - 143, 85))
     screen.blit(judul_text, judul_text_rect)
     
     # Menambahkan tulisan "Project PAA 2023" di footer
     judul_font = pygame.font.Font(None, 20)
-    judul_text = judul_font.render("Project PAA 2023", True, BLACK)
+    judul_text = judul_font.render("Project PAA 2023", True, HITAM)
     judul_text_rect = judul_text.get_rect(center=(lebar_layar - 143, 655))
     screen.blit(judul_text, judul_text_rect)
 
@@ -149,38 +149,38 @@ def button():
         if i == 5:
             text_rect = pygame.Rect(lebar_layar - 260, 140 + i * 50, 240, 40)
         elif i == 8:
-            pygame.draw.rect(screen, RED, kotak_button, border_radius=radius)
+            pygame.draw.rect(screen, MERAH, kotak_button, border_radius=radius)
         else:
-            pygame.draw.rect(screen, BLUE, kotak_button, border_radius=radius)
-            pygame.draw.rect(screen, WHITE, kotak_button, 2, border_radius=radius)
+            pygame.draw.rect(screen, CREAM, kotak_button, border_radius=radius)
+            pygame.draw.rect(screen, PUTIH, kotak_button, 2, border_radius=radius)
             text_rect = kotak_button
 
     kotak_button_pandanganDroidMerah = pygame.Rect(lebar_layar - 260, 140 + 6 * 50, 240, 40)
     if pandangan_droidMerah:
-        pygame.draw.rect(screen, RED, kotak_button_pandanganDroidMerah, border_radius=radius)
+        pygame.draw.rect(screen, MERAH, kotak_button_pandanganDroidMerah, border_radius=radius)
     else:
-        pygame.draw.rect(screen, BLUE, kotak_button_pandanganDroidMerah, border_radius=radius)
-    pygame.draw.rect(screen, WHITE, kotak_button_pandanganDroidMerah, 2, border_radius=radius)
-    pandangan_droidMerah_text = font.render("", True, BLACK)
+        pygame.draw.rect(screen, CREAM, kotak_button_pandanganDroidMerah, border_radius=radius)
+    pygame.draw.rect(screen, PUTIH, kotak_button_pandanganDroidMerah, 2, border_radius=radius)
+    pandangan_droidMerah_text = font.render("", True, HITAM)
     pandangan_droidMerah_text_rect = pandangan_droidMerah_text.get_rect(center=kotak_button_pandanganDroidMerah.center)
     screen.blit(pandangan_droidMerah_text, pandangan_droidMerah_text_rect)
 
     pandangan_droidHijau_kotak_button = pygame.Rect(lebar_layar - 260, 140 + 4 * 50, 240, 40)
     if pandangan_droidHijau:
-        pygame.draw.rect(screen, GREEN, pandangan_droidHijau_kotak_button, border_radius=radius)
+        pygame.draw.rect(screen, HIJAU, pandangan_droidHijau_kotak_button, border_radius=radius)
     else:
-        pygame.draw.rect(screen, BLUE, pandangan_droidHijau_kotak_button, border_radius=radius)
-    pygame.draw.rect(screen, WHITE, pandangan_droidHijau_kotak_button, 2, border_radius=radius)
-    pandangan_droidHijau_text = font.render("", True, BLACK)
+        pygame.draw.rect(screen, CREAM, pandangan_droidHijau_kotak_button, border_radius=radius)
+    pygame.draw.rect(screen, PUTIH, pandangan_droidHijau_kotak_button, 2, border_radius=radius)
+    pandangan_droidHijau_text = font.render("", True, HITAM)
     pandangan_droidHijau_text_rect = pandangan_droidHijau_text.get_rect(center=pandangan_droidHijau_kotak_button.center)
     screen.blit(pandangan_droidHijau_text, pandangan_droidHijau_text_rect)
 
     # Sesuaikan posisi teks untuk setiap tombol
     for i, label in enumerate(labels):
         if i == 8:
-            text_color = WHITE  # Set text color to white for button with index 7
+            text_color = PUTIH  # Set text color to putih for button with index 7
         else:
-            text_color = BLACK  # Set text color to black for other buttons
+            text_color = HITAM  # Set text color to hitam for other buttons
 
         text = font.render(label, True, text_color)
         text_rect = text.get_rect(center=(kotak_button.centerx, 140 + i * 50 + 20))
@@ -192,9 +192,9 @@ def button():
     pandangan_droidHijau_text_rect = pandangan_droidHijau_text.get_rect(center=(pandangan_droidHijau_kotak_button.centerx, 140 + 3 * 50 + 20))
     screen.blit(pandangan_droidHijau_text, pandangan_droidHijau_text_rect)
 
-    pygame.draw.rect(screen, BLACK, (lebar_layar - 260, 140 + 5 * 50 + 15, 240, 10), border_radius=radius)
+    pygame.draw.rect(screen, HITAM, (lebar_layar - 260, 140 + 5 * 50 + 15, 240, 10), border_radius=radius)
     slider_pos = lebar_layar - 170 + int((droid_hijau_visibility - 2) / 3 * 240)
-    pygame.draw.circle(screen, BLACK, (slider_pos, 140 + 5 * 50 + 20), 10)
+    pygame.draw.circle(screen, HITAM, (slider_pos, 140 + 5 * 50 + 20), 10)
 
 def acak_droid():
     global baris_droid_hijau, kolom_droid_hijau, baris_droid_merah, kolom_droid_merah
@@ -220,7 +220,7 @@ def acak_droid_tambahan():
         if labirin[baris_droid_merah][kolom_droid_merah] == 0:
             break
     
-def is_white_path(baris, kolom):
+def is_putih_path(baris, kolom):
     return labirin[baris][kolom] == 0
 
 # fungsi untuk button acak map
@@ -249,7 +249,7 @@ def tambah_droid_merah():
     while True:
         baris_droid_merah = random.randint(0, tinggi_sel - 1)
         kolom_droid_merah = random.randint(0, lebar_sel - 1)
-        if is_white_path(baris_droid_merah, kolom_droid_merah) and (baris_droid_merah != baris_droid_hijau or kolom_droid_merah != kolom_droid_hijau):
+        if is_putih_path(baris_droid_merah, kolom_droid_merah) and (baris_droid_merah != baris_droid_hijau or kolom_droid_merah != kolom_droid_hijau):
             break
     # Menambahkan droid merah baru ke dalam list
     droidMerah_tambahan.append((baris_droid_merah, kolom_droid_merah))
@@ -268,7 +268,7 @@ def tambah_droid():
     while True:
         baris_droid_merah = random.randint(0, tinggi_sel - 1)
         kolom_droid_merah = random.randint(0, lebar_sel - 1)
-        if is_white_path(baris_droid_merah, kolom_droid_merah) and (
+        if is_putih_path(baris_droid_merah, kolom_droid_merah) and (
                 baris_droid_merah != baris_droid_hijau or kolom_droid_merah != kolom_droid_hijau):
             break
     # Menambahkan droid merah baru ke dalam list
@@ -367,24 +367,24 @@ def get_valid_neighbors(row, col):
 
 def update_game():
     if pygame.display.get_init():  # Check if the display is still open
-        screen.fill(GRAY)
+        screen.fill(ABU_ABU)
         gambar_labirin()
 
         if not pandangan_droidMerah:
             if not pandangan_droidHijau:
-                gambar_droid(GREEN, baris_droid_hijau, kolom_droid_hijau)
+                gambar_droid(HIJAU, baris_droid_hijau, kolom_droid_hijau)
 
         for droid_merah in droidMerah_tambahan:
-            gambar_droid(RED, droid_merah[0], droid_merah[1])
+            gambar_droid(MERAH, droid_merah[0], droid_merah[1])
 
-        gambar_droid(RED, baris_droid_merah, kolom_droid_merah)
+        gambar_droid(MERAH, baris_droid_merah, kolom_droid_merah)
 
         # Periksa apakah droid merah bertemu dengan droid hijau
         if (baris_droid_merah, kolom_droid_merah) == (baris_droid_hijau, kolom_droid_hijau):
             if pygame.display.get_init():  # Check if the display is still open
-                pygame.draw.rect(screen, RED, (220, 250, 505, 100))
+                pygame.draw.rect(screen, MERAH, (220, 250, 505, 100))
                 font = pygame.font.Font(None, 30)
-                text = font.render("DROID MERAH TELAH MENEMUKAN DROID HIJAU", True, WHITE)
+                text = font.render("DROID MERAH TELAH MENEMUKAN DROID HIJAU", True, PUTIH)
                 screen.blit(text, (225, 295))
                 button()
                 pygame.display.flip()
@@ -502,18 +502,18 @@ droidMerah_tambahan = []  # Menginisialisasi mendaftar droid merah
 posisi_terakhir_droid_hijau = (baris_droid_merah, kolom_droid_merah)
 
 while running:
-    screen.fill(GRAY) # ketika pandangan droid hijau ditekan layar berubah warna abu-abu
+    screen.fill(ABU_ABU) # ketika pandangan droid hijau ditekan layar berubah warna abu-abu
 
     gambar_labirin()
     
     if not pandangan_droidMerah:
       if not pandangan_droidHijau:
-        gambar_droid(GREEN, baris_droid_hijau, kolom_droid_hijau)
+        gambar_droid(HIJAU, baris_droid_hijau, kolom_droid_hijau)
     
     for droid_merah in droidMerah_tambahan:
-        gambar_droid(RED, droid_merah[0], droid_merah[1])
+        gambar_droid(MERAH, droid_merah[0], droid_merah[1])
 
-    gambar_droid(RED, baris_droid_merah, kolom_droid_merah)
+    gambar_droid(MERAH, baris_droid_merah, kolom_droid_merah)
     button()
 
     for event in pygame.event.get():
@@ -532,14 +532,14 @@ while running:
                         acak_droid_tambahan()
                         droidMerah_tambahan_count = 0
                         for droid_merah in droidMerah_tambahan:
-                            gambar_droid(RED, droid_merah[0], droid_merah[1])
+                            gambar_droid(MERAH, droid_merah[0], droid_merah[1])
                         pygame.display.flip()  # Perbarui tampilan setelah mengacak droid dan menggambar droid merah
                     # button untuk tambah droid     
                     elif button_index == 2:
                         if droidMerah_tambahan_count < MAX_droidMerah_tambahan:
                             tambah_droid()
                             for droid_merah in droidMerah_tambahan:
-                                gambar_droid(RED, droid_merah[0], droid_merah[1])
+                                gambar_droid(MERAH, droid_merah[0], droid_merah[1])
                             pygame.display.flip()  # Perbarui tampilan setelah menambahkan dan menggambar droid merah
                     # button untuk acak map
                     elif button_index == 3:
@@ -548,10 +548,10 @@ while running:
                         acak_droid_tambahan()
                         tambah_droid_merah()
                         #droidMerah_tambahan_count = 0
-                        droidMerah_tambahan = []  # Reset the list of red droids
+                        droidMerah_tambahan = []  # Reset the list of merah droids
                         #tambah_droid()
                         for droid_merah in droidMerah_tambahan:
-                            gambar_droid(RED, droid_merah[0], droid_merah[1])
+                            gambar_droid(MERAH, droid_merah[0], droid_merah[1])
                         pygame.display.flip()  # Perbarui tampilan setelah menambahkan dan menggambar droid merah
                     # button untuk pandangan droid hijau
                     elif button_index == 4:
@@ -568,7 +568,7 @@ while running:
                     elif button_index == 7:
                         kurangi_droid()
                         for droid_merah in droidMerah_tambahan:
-                            gambar_droid(RED, droid_merah[0], droid_merah[1])
+                            gambar_droid(MERAH, droid_merah[0], droid_merah[1])
                         pygame.display.flip()  # Perbarui tampilan setelah mengurangi dan menggambar droid merah
                     #button untuk stop permainan
                     elif button_index == 8:
