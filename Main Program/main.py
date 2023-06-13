@@ -227,7 +227,7 @@ def acak_map():
     acak_labirin(0, 0)
     connect_labirin(0, 0)
     acak_droid()  # Mengacak posisi droid setelah mengacak map
-    acak_droid_tambahan()
+    #acak_droid_tambahan()
 
 # droid merah utama
 def tambah_droid_merah():
@@ -550,14 +550,14 @@ while running:
                     # button untuk acak map
                     elif button_index == 3:
                         acak_map()
-                        acak_droid()
-                        acak_droid_tambahan()
-                        tambah_droid_merah()
-                        #droidMerah_tambahan_count = 0
-                        droidMerah_tambahan = []  # Reset the list of merah droids
-                        #tambah_droid()
-                        for droid_merah in droidMerah_tambahan:
-                            gambar_droid(MERAH, droid_merah[0], droid_merah[1])
+                        for i in range(len(droidMerah_tambahan)):
+                            while True:
+                                baris = random.randint(0, tinggi_sel - 1)
+                                kolom = random.randint(0, lebar_sel - 1)
+                                if labirin[baris][kolom] == 0 and (baris, kolom) not in droidMerah_tambahan:
+                                    break
+                            droidMerah_tambahan[i] = (baris, kolom)
+                        #droidMerah_tambahan = []  # Reset the list of merah droid
                         pygame.display.flip()  # Perbarui tampilan setelah menambahkan dan menggambar droid merah
                     # button untuk pandangan droid hijau
                     elif button_index == 4:
