@@ -63,6 +63,11 @@ Deskripsi Fitur
 # Fitur untuk Mengatur Jarak Pandang Droid Hijau Melalui Slider
 Deskripsi Fitur
 
+
+https://github.com/Farel-Putra-Albana/PAA-Group215/assets/118239709/b58cab6d-8a19-405c-a69f-fbf14890457c
+
+
+
 # Fitur untuk Melihat Pandangan Droid Merah
 Deskripsi Fitur
 
