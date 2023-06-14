@@ -35,7 +35,8 @@ kolom_droid_merah = None
 # Inisialisasi layar
 screen = pygame.display.set_mode((lebar_layar, tinggi_layar))
 pygame.display.set_caption("Project PAA")
-# Membuat dan menggati logo/icon screen
+
+# Membuat dan mengganti logo/icon screen
 icon = pygame.image.load("Logo.png")
 pygame.display.set_icon(icon)
 
@@ -78,7 +79,7 @@ def connect_labirin(baris, kolom):
             labirin[baris + dx // 2][kolom + dy // 2] = 0
             connect_labirin(baris_baru, kolom_baru)
 
-# ketetanggaan antar baris dan kolom  
+# Ketetanggaan antar baris dan kolom  
 def get_neighbors(baris, kolom):
     neighbors = []
     arah = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -92,7 +93,7 @@ def get_neighbors(baris, kolom):
 
     return neighbors
 
-# fungsi untuk menggambar labirin
+# Fungsi untuk menggambar labirin
 def gambar_labirin():
     for baris in range(tinggi_sel):
         for kolom in range(lebar_sel):
@@ -213,7 +214,7 @@ def kurangi_droid():
     if len(droidMerah_tambahan) > 0:
         droidMerah_tambahan.pop()
 
-# fungsi untuk button acak map
+# Fungsi untuk button acak map
 def acak_map():
     global labirin, pandangan_droidHijau, pandangan_droidMerah
 
@@ -229,7 +230,7 @@ def acak_map():
     acak_droid()  # Mengacak posisi droid setelah mengacak map
     #acak_droid_tambahan()
 
-# droid merah utama
+# Droid merah utama
 def tambah_droid_merah():
     global droidMerah_tambahan
     # Mengecek apakah sudah mencapai batas maksimal droid merah
@@ -292,39 +293,44 @@ def acak_droid_tambahan():
     droidMerah_tambahan.append((baris, kolom))
 
 def move_droid_merah():
-    global baris_droid_merah, kolom_droid_merah, posisi_terakhir_droid_hijau, is_game_running
-    
+    global baris_droid_merah, kolom_droid_merah, is_game_running
+
     if not is_game_running:
         return  # Hentikan pergerakan droid merah jika is_game_running adalah False
 
-    # Cari jalur menggunakan BFS Search untuk droid merah utama
-    path = bfs_search((baris_droid_merah, kolom_droid_merah), (baris_droid_hijau, kolom_droid_hijau), posisi_terakhir_droid_hijau)
+    # Ambil posisi droid hijau saat ini
+    posisi_terakhir_droid_hijau = (baris_droid_hijau, kolom_droid_hijau)
+
+    # Cari jalur menggunakan BFS Search untuk droid hijau saat ini
+    path = bfs_search((baris_droid_merah, kolom_droid_merah), posisi_terakhir_droid_hijau)
 
     if path:
-        for step in path:
-            if not is_game_running:
-                return  # Hentikan pergerakan droid merah jika is_game_running berubah menjadi False
-            # Pindahkan droid merah utama ke langkah berikutnya dalam jalur
-            baris_droid_merah, kolom_droid_merah = step
-            if pygame.display.get_init():  # Check if the display is still open
-                move_droid_hijau()  # Perbarui tampilan setiap langkah
-                time.sleep(0.2)  # Delay selama 0,2 detik antara setiap langkah
+        # Pindahkan droid merah ke langkah berikutnya dalam jalur
+        baris_droid_merah, kolom_droid_merah = path[1]  # Mengambil langkah pertama setelah posisi saat ini
 
-            # Pindahkan juga droid merah tambahan ke langkah yang sama
-            update_posisi_droid_merah_tambahan()
+        # Pembaruan posisi droid merah tambahan
+        update_posisi_droid_merah_tambahan()
+
+        # Delay sebelum pembaruan posisi berikutnya
+        time.sleep(0.2)
+    
+    # Periksa apakah droid merah bertemu dengan droid hijau
+    if (baris_droid_merah, kolom_droid_merah) == (baris_droid_hijau, kolom_droid_hijau):
+        print("DROID MERAH TELAH MENEMUKAN DROID HIJAU")
+        stop_game()
 
 def update_posisi_droid_merah_tambahan():
     global droidMerah_tambahan
 
     for i in range(len(droidMerah_tambahan)):
-        path = bfs_search(droidMerah_tambahan[i], (baris_droid_hijau, kolom_droid_hijau), posisi_terakhir_droid_hijau)
+        posisi_terakhir_droid_hijau = (baris_droid_hijau, kolom_droid_hijau)
+        path = bfs_search(droidMerah_tambahan[i], posisi_terakhir_droid_hijau)
         if path:
             for step in path:
                 droidMerah_tambahan[i] = step
-                update_game()
                 time.sleep(0.2)
 
-def bfs_search(start, goal, posisi_terakhir):
+def bfs_search(start, goal):
     visited = set()
     q = queue.Queue()
     q.put([start])
@@ -369,7 +375,7 @@ def get_valid_neighbors(row, col):
     return neighbors
 
 def update_game():
-    if pygame.display.get_init():  # Check if the display is still open
+    if pygame.display.get_init():  # Periksa apakah tampilan masih terbuka
         screen.fill(ABU_ABU)
         gambar_labirin()
 
@@ -380,11 +386,11 @@ def update_game():
         for droid_merah in droidMerah_tambahan:
             gambar_droid(MERAH, droid_merah[0], droid_merah[1])
 
-        gambar_droid(MERAH, baris_droid_merah, kolom_droid_merah)
+        gambar_droid(HIJAU, baris_droid_merah, kolom_droid_merah)
 
         # Periksa apakah droid merah bertemu dengan droid hijau
         if (baris_droid_merah, kolom_droid_merah) == (baris_droid_hijau, kolom_droid_hijau):
-            if pygame.display.get_init():  # Check if the display is still open
+            if pygame.display.get_init():  # Periksa apakah tampilan masih terbuka
                 pygame.draw.rect(screen, MERAH, (220, 250, 505, 100))
                 font = pygame.font.Font(None, 30)
                 text = font.render("DROID MERAH TELAH MENEMUKAN DROID HIJAU", True, PUTIH)
@@ -421,7 +427,7 @@ def move_droid_hijau():
         else:
             # Jika tidak ada tetangga yang dapat dipilih (jalan mentok), berhenti
             print("DROID MERAH TELAH MENEMUKAN DROID HIJAU")
-            return
+            stop_game()
     else:
         # Pilih tetangga secara acak
         random_neighbor = random.choice(neighbors)
@@ -460,26 +466,27 @@ game_started = False
 def run_game():
     global is_game_running, posisi_terakhir_droid_hijau
     while is_game_running:
-        if is_game_running:
-            move_droid_merah()
-            if not is_game_running:
-                break  # Hentikan pergerakan droid merah jika is_game_running berubah menjadi False
+        posisi_terakhir_droid_hijau = (baris_droid_hijau, kolom_droid_hijau)
+        
         if is_game_running:
             move_droid_hijau()
             if not is_game_running:
-                break  # Hentikan pergerakan droid hijau jika is_game_running berubah menjadi False
-        posisi_terakhir_droid_hijau = (baris_droid_hijau, kolom_droid_hijau)
+                break
+        
         if is_game_running:
-            update_game()
-        else:
-            break
+            move_droid_merah()
+            if not is_game_running:
+                break
+
+    if is_game_running:
+        update_game()
 
 # Fungsi untuk menghentikan pergerakan droid merah dan hijau
 def stop_game():
     global is_game_running
     is_game_running = False
 
-is_game_running = False  # Global variable to track the game state
+is_game_running = False  # Variabel global untuk melacak status game
 
 # Fungsi untuk memulai permainan
 def start_game():
@@ -493,7 +500,7 @@ def start_game():
 baris_droid_hijau = 0  # Nilai awal baris_droid_hijau
 kolom_droid_hijau = 0  # Nilai awal kolom_droid_hijau
 # Kemudian, pada bagian yang lain dalam program, Anda dapat menggunakannya seperti ini:
-posisi_terakhir_droid_hijau = (baris_droid_merah, kolom_droid_merah)
+posisi_terakhir_droid_hijau = (baris_droid_hijau, kolom_droid_hijau)
             
 # Loop utama
 running = True
@@ -502,7 +509,7 @@ pandangan_droidHijau = False
 acak_map()
 droidMerah_tambahan = []  # Menginisialisasi mendaftar droid merah
 # Inisialisasi posisi terakhir droid hijau
-posisi_terakhir_droid_hijau = (baris_droid_merah, kolom_droid_merah)
+posisi_terakhir_droid_hijau = (baris_droid_hijau, kolom_droid_hijau)
 
 while running:
     screen.fill(ABU_ABU) # ketika pandangan droid hijau ditekan layar berubah warna abu-abu
@@ -557,7 +564,7 @@ while running:
                                 if labirin[baris][kolom] == 0 and (baris, kolom) not in droidMerah_tambahan:
                                     break
                             droidMerah_tambahan[i] = (baris, kolom)
-                        #droidMerah_tambahan = []  # Reset the list of merah droid
+                        #droidMerah_tambahan = []  # Reset daftar droid merah
                         pygame.display.flip()  # Perbarui tampilan setelah menambahkan dan menggambar droid merah
                     # button untuk pandangan droid hijau
                     elif button_index == 4:
