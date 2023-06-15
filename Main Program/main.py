@@ -274,17 +274,6 @@ def acak_droid():
             break
 
 droidMerah_tambahan = []
-# Fungsi mengacak droid merah tambahan
-def acak_droid_tambahan():
-    global baris_droid_merah, kolom_droid_merah
-
-    while True:
-        baris = random.randint(0, tinggi_sel - 1)
-        kolom = random.randint(0, lebar_sel - 1)
-        if labirin[baris][kolom] == 0 and (baris, kolom) not in droidMerah_tambahan:
-            break
-
-    droidMerah_tambahan.append((baris, kolom))
 
 # Fungsi menggerakan droid merah utama
 def move_droid_merah():
@@ -354,6 +343,7 @@ def bfs_search(start, goal):
 
     return None
 
+# Fungsi untuk mendapatkan ketetanggaan yang benar 
 def get_valid_neighbors(row, col):
     neighbors = []
 
@@ -549,13 +539,13 @@ while running:
                         pandangan_droidMerah = not pandangan_droidMerah
                         if pandangan_droidMerah:
                           pandangan_droidHijau = False
-                    #button untuk KURANGI DROID
+                    # button untuk KURANGI DROID
                     elif button_index == 7:
                         kurangi_droid()
                         for droid_merah in droidMerah_tambahan:
                             gambar_droid(MERAH, droid_merah[0], droid_merah[1])
                         pygame.display.flip()  # Perbarui tampilan setelah mengurangi dan menggambar droid merah
-                    #button untuk stop permainan
+                    # button untuk stop permainan
                     elif button_index == 8:
                         stop_game()
 
